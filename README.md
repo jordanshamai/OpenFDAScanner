@@ -1,6 +1,6 @@
-*RiskFreeRX
+# RiskFreeRX
 
-Overview
+## Overview
 
 RiskFreeRX is a mobile application designed to help users identify potential allergic reactions to medications before taking them. Many individuals are allergic to certain ingredients in medications, but they may not always be aware of all the components present in different drugs. RiskFreeRX allows users to scan prescriptions, extract the National Drug Code (NDC) from the image, retrieve active and inactive ingredients, and cross-check them against medications the user has previously had adverse reactions to.
 

@@ -1,83 +1,85 @@
-# RiskFreeRX
+# Prescription Scanner with OpenFDA Allergy Cross-Check
 
-## Overview
+**Built at HackRU 2025**  
+A mobile app that scans prescription labels and checks drug safety for users with allergies or sensitivities using the OpenFDA database.
 
-RiskFreeRX is a mobile application designed to help users identify potential allergic reactions to medications before taking them. Many individuals are allergic to certain ingredients in medications, but they may not always be aware of all the components present in different drugs. RiskFreeRX allows users to scan prescriptions, extract the National Drug Code (NDC) from the image, retrieve active and inactive ingredients, and cross-check them against medications the user has previously had adverse reactions to.
+---
 
-## Key Features
+## What It Does
 
-- **Image-Based NDC Extraction**: Users can take a picture of their prescription or any document containing an NDC code.
+This app uses your phone’s camera to capture a photo of a prescription label, extracts the **NDC (National Drug Code)** via **OCR + Regex**, and queries the **OpenFDA** API to identify:
 
-- **Automated Ingredient Lookup**: The app retrieves active and inactive ingredients of the medication using the OpenFDA Drug Labeling API.
+- Drug name
+- Active and inactive ingredients
+- Potential allergens based on user profile
 
-- **Allergy Risk Identification**: Cross-checks medication ingredients with previously flagged allergens.
+If any risky ingredients are found, the user is **alerted in real-time**.
 
-- **Scalable & Secure Architecture**: Built with Supabase for PostgreSQL storage, authentication, and row-level security.
-
-- **Multi-Platform Support**: Developed using React Native & Expo for seamless deployment on both iOS and Android.
-
-- **Cloud-Based Processing**: Uses AWS Lambda & API Gateway for OCR, regex processing, and API interactions.
-
-- **OpenAI-Assisted Ingredient Extraction**: When inactive ingredient data is missing from OpenFDA, the app leverages OpenAI to infer potential ingredients from available drug information.
+---
 
 ## Tech Stack
 
-- **Frontend**: React Native & Expo (cross-platform mobile development)
+| Component         | Tech Used                  |
+|------------------|----------------------------|
+| Frontend      | Expo + React Native        |
+| OCR           | Google Cloud Vision API    |
+| Backend       | AWS Lambda                 |
+| Data Source   | OpenFDA Drug Label API     |
+| Auth (optional) | Supabase / Firebase (TBD)  |
 
-- **Database & Authentication**: Supabase (PostgreSQL with built-in authentication & row-level security)
-
-- **Cloud Functions**: AWS Lambda & API Gateway (serverless architecture)
-
-- **OCR & Data Extraction**: Google Cloud Vision (for text recognition from images)
-
-- **Drug Information Source**: OpenFDA Drug Labeling API (for NDC-based ingredient lookup)
-
-- **AI-Assisted Extraction**: OpenAI (for additional ingredient analysis when data is incomplete)
+---
 
 ## How It Works
 
-- **Capture & Upload**: The user takes a picture of their prescription or any document containing an NDC code.
+1. **Snap a photo** of your prescription.
+2. OCR + Regex extracts the NDC number.
+3. The NDC is passed to an **AWS Lambda** function.
+4. The Lambda serverlessly queries **OpenFDA** for that drug.
+5. The app checks the ingredients list against user allergies.
+6. You get an instant **visual alert** if a match is found!
 
-- **OCR & Data Extraction**: Google Cloud Vision extracts text from the image, and regex is applied to identify the NDC code.
+---
 
-- **Ingredient Lookup**: The app queries the OpenFDA Drug Labeling API using the NDC to fetch active and inactive ingredients.
+## Example
 
-- **Allergy Risk Analysis**: The retrieved ingredients are checked against the user’s known allergens.
+Scanned: `NDC 12345-6789`  
+Found: **Amoxicillin**  
+Warning: Contains penicillin — user allergic.
 
-- **AI Assistance**: If inactive ingredients are missing, ChatGPT processes the entire drug information to infer potential inactive ingredients.
 
-- **User Alert**: The app informs the user of any potential risks based on ingredient matching.
+## Team
 
-## Why RiskFreeRX?
+- **Jordan Shamai** – Full Stack, OCR, AWS Lambda, Supabase, Gamma
+- **Aaron Wu** - Full Stack, AWS Lambda, Supabase
+- **Srihan Kakarlapudi** - Full Stack, AWS Lambda, Gamma, R Studio
 
-- **Security & Privacy**: With Supabase row-level security, user data is strictly protected, ensuring sensitive health information remains confidential.
-
-- **Scalability & Integration**: Designed to be easily integrated into supermarket checkouts, hospital systems, and pharmacies.
-
-- **Comprehensive Analysi**s: Leverages multiple APIs and AI models to enhance ingredient detection and risk assessment.
-
-- **User-Friendly & Accessible**: Cross-platform compatibility ensures that the app is available on both iOS and Android.
-
-## Challenges & Considerations
-
-- **Incomplete Inactive Ingredient Dat**a: The OpenFDA database does not always provide inactive ingredient lists, requiring AI-based inference.
-
-- **Text Complexity in OCR**: Some prescription labels may have complex formatting, requiring advanced regex processing.
-
-- **AI Limitations**: ChatGPT-based ingredient extraction is not 100% reliable but serves as a supplementary risk indicator.
+---
 
 ## Future Improvements
 
-- **User-Customized Allergy Profiles**: Allow users to input specific allergens for more precise risk assessment.
+-  Auto-highlight allergens in ingredient list
+-  Manual override if OCR fails
+-  Support for multiple languages
+-  User profiles and persistent allergy history
+---
 
-- **Integration with Medical Records**: Connect with EHR systems for automatic cross-checking of patient history.
+## Why It Matters
 
-- **Offline Functionality**: Enable local database storage for quicker access and analysis without an internet connection.
+Every year, thousands of adverse reactions are caused by patients unknowingly taking drugs with known allergens. This app helps:
 
-## Conclusion
+ Reduce preventable ER visits  
+ Empower patients with better information  
+ Make medication safer — one scan at a time.
 
-RiskFreeRX enhances medication safety by providing users with a simple yet effective way to identify potential allergens in medications before they take them. By leveraging OCR, cloud APIs, AI, and a secure database, we ensure a scalable, private, and efficient solution for medication safety.
+---
 
-## Contributors
+## Contact
 
-Aaron Wu, Jordan Shamai, Shrihan Kakarlapudi
+**Jordan Shamai**  
+jordan.shamai04@gmail.com  
+https://github.com/jordanshamai/
+
+---
+
+Built with love ❤️ and code at HackRU25 🚀
+
